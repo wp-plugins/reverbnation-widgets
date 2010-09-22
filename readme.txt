@@ -445,13 +445,19 @@ wordpress.com, but as yet there is no word on when this will happen.
 = 1.0 =
 * Initial version.
 
+= 1.1 =
+* Changed constants to production values (doh!)
+
 == Upgrade Notice ==
 
 = 1.0 =
 Initial version.
- 
+
+= 1.1 =
+Changed constants to production values, so it should work now.  Sorry.
+
 == Support ==
 
 For support with the installation or use of this plugin, please email
 us at support@reverbnation.com .  Also, you can leave a comment on our
-forums at http://forum.reverbnation.com .
+support portal at http://support.reverbnation.com .
