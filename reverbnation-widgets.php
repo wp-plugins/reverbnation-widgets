@@ -10,10 +10,10 @@
 */
 
 // Development:
-define("RN_WIDGETS_CACHE_SERVER", 'http://192.168.0.148:10148');
-define("RN_WIDGETS_WEB_SERVER", 'http://192.168.0.148:10148');
-define("RN_WIDGETS_AUDIOLIFE_CACHE_SERVER", 'http://cache.audiolifeqa.com/');
-define("RN_WIDGETS_AUDIOLIFE_WEB_SERVER", 'http://ws.audiolifeva.com/');
+// define("RN_WIDGETS_CACHE_SERVER", 'http://192.168.0.148:10148');
+// define("RN_WIDGETS_WEB_SERVER", 'http://192.168.0.148:10148');
+// define("RN_WIDGETS_AUDIOLIFE_CACHE_SERVER", 'http://cache.audiolifeqa.com/');
+// define("RN_WIDGETS_AUDIOLIFE_WEB_SERVER", 'http://ws.audiolifeva.com/');
 
 // Autobuild / Tunehive:
 // define("RN_WIDGETS_CACHE_SERVER", 'http://cache.tunehive.com');
@@ -22,10 +22,10 @@ define("RN_WIDGETS_AUDIOLIFE_WEB_SERVER", 'http://ws.audiolifeva.com/');
 // define("RN_WIDGETS_AUDIOLIFE_WEB_SERVER", 'http://ws.audiolifeva.com/');
 
 // Production:
-// define("RN_WIDGETS_CACHE_SERVER", 'http://cache.reverbnation.com');
-// define("RN_WIDGETS_WEB_SERVER", 'http://www.reverbnation.com');
-// define("RN_WIDGETS_AUDIOLIFE_CACHE_SERVER", 'http://cache.audiolife.com//');
-// define("RN_WIDGETS_AUDIOLIFE_WEB_SERVER", 'http://ws.audiolife.com/');
+define("RN_WIDGETS_CACHE_SERVER", 'http://cache.reverbnation.com');
+define("RN_WIDGETS_WEB_SERVER", 'http://www.reverbnation.com');
+define("RN_WIDGETS_AUDIOLIFE_CACHE_SERVER", 'http://cache.audiolife.com//');
+define("RN_WIDGETS_AUDIOLIFE_WEB_SERVER", 'http://ws.audiolife.com/');
 
 // helper functions...
 
