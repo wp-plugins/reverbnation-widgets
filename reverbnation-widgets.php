@@ -180,13 +180,13 @@ function rn_widgets_get_tunewidget($page_object, $posted_by, $shuffle, $autoplay
   return $embed . '<br/>' . $footer . '<br/>' . $tracking_image . $quantcast;
 }
 
-function rn_widgets_get_grab_box_widget($page_object, $posted_by, $bgcolor, $fontcolor) {
+function rn_widgets_get_grab_box_widget($page_object, $posted_by, $width, $height, $bgcolor, $fontcolor) {
   $url_params = http_build_query(array('page_object_id' => $page_object, 
                                        'webServer' => RN_WIDGETS_WEB_SERVER,
                                        'backgroundcolor' => $bgcolor, 
                                        'font_color' => $fontcolor,
                                        'posted_by' => $posted_by));
-  $embed = "<embed type=\"application/x-shockwave-flash\" src=\"http://cache.tunehive.com/widgets/swf/25/grab_box.swf?page_object_id=artist_3193&webServer=http%3A%2F%2Fwww.tunehive.com%3A83&backgroundcolor=EEEEEE&font_color=000000&posted_by=fan_3\" height=\"300\" width=\"300\" wmode=\"opaque\"/>";
+  $embed = "<embed type=\"application/x-shockwave-flash\" src=\"http://cache.tunehive.com/widgets/swf/25/grab_box.swf?page_object_id=artist_3193&webServer=http%3A%2F%2Fwww.tunehive.com%3A83&backgroundcolor=EEEEEE&font_color=000000&posted_by=fan_3\" height=\"{$height}\" width=\"{$width}\" wmode=\"opaque\"/>";
   $tracking_image = rn_widgets_tracking_pixel(25, $page_object, $posted_by);
   $quantcast = rn_widgets_quantcast_tracking_code();
   $top_link = rn_widgets_top_link($page_object, 300, 26);
@@ -194,7 +194,10 @@ function rn_widgets_get_grab_box_widget($page_object, $posted_by, $bgcolor, $fon
   return "<div style=\"position:relative\">" . $embed . "<br/>" . $tracking_image . $quantcast . $top_link . $bottom_link . "</div>";
 }
 
-function rn_widgets_get_local_charts_widget($title, $subtitle, $bgcolor, $fontcolor, $posted_by, $latitude, $longitude, $distance, $genres) {
+function rn_widgets_get_local_charts_widget($title, $subtitle, $bgcolor, $fontcolor, $posted_by, $latitude, $longitude, $distance, $country, $genres) {
+  if (!empty($longitude) && !empty($latitude)) {
+    $country = '';
+  }
   $url_params = http_build_query(array('w' => '0',
                                        'webServer' => RN_WIDGETS_WEB_SERVER,
                                        'title' => $title,
@@ -205,6 +208,7 @@ function rn_widgets_get_local_charts_widget($title, $subtitle, $bgcolor, $fontco
                                        'latitude' => $latitude,
                                        'longitude' => $longitude,
                                        'distance' => $distance,
+                                       'country' => $country,
                                        'genres' => $genres));
   $embed = "<embed type=\"application/x-shockwave-flash\" src=\"" . RN_WIDGETS_CACHE_SERVER . "/widgets/swf/27/localcharts_v1xx.swf?{$url_params}\" height=\"285\" width=\"434\" wmode=\"opaque\"/>";
   $tracking_image = rn_widgets_tracking_pixel(27, 'main_0', $posted_by);
@@ -305,13 +309,13 @@ function rn_widgets_get_street_team_collector_widget($page_object, $posted_by, $
   return $embed . '<br/>' . $footer . '<br/>' . $tracking_image . $quantcast;
 }
 
-function rn_widgets_get_fan_exclusive_widget($page_object, $posted_by, $bgcolor, $fontcolor) {
+function rn_widgets_get_fan_exclusive_widget($page_object, $posted_by, $default_song, $bgcolor, $fontcolor) {
   $url_params = http_build_query(array('page_object_id' => $page_object,
                                        'webServer' => RN_WIDGETS_WEB_SERVER,
                                        'border_color' => $bgcolor,
                                        'font_color' => $fontcolor,
                                        'posted_by' => $posted_by,
-                                       'default_song' => ''));
+                                       'default_song' => $default_song));
   $embed = "<embed type=\"application/x-shockwave-flash\" src=\"" . RN_WIDGETS_CACHE_SERVER . "/widgets/swf/36/fanexclusive_v1xx.swf?{$url_params}\" height=\"130\" width=\"180\" wmode=\"opaque\"/>";
   $tracking = rn_widgets_tracking_pixel(36, $page_object, $posted_by);
   $top_link = rn_widgets_top_link($page_object, 180, 15);
@@ -436,10 +440,13 @@ function rn_widgets_shortcode($atts) {
           // Local Charts attributes
           'title' => 'Music Charts',
           'subtitle' => '',
-          'latitude' => '35.9989014',
-          'longitude' => '-78.899063',
+          // 'latitude' => '35.9989014',
+          // 'longitude' => '-78.899063',
+          'latitude' => '',
+          'longitude' => '',
           'distance' => '25',
           'genres' => 'all',
+          'country' => 'US',
           // Store attributes
           'store_id' => '0',
           'width' => '350',
@@ -447,7 +454,12 @@ function rn_widgets_shortcode($atts) {
           // Pro widget attributes
           'skin_id' => 'PWAS1003',
           'bordercolor' => '000000',
-          'show_map' => 'true');
+          'show_map' => 'true',
+          // Grab box attributes
+          'width' => '300',
+          'height' => '300',
+          // Fan Exclusive widget attributes
+          'default_song' => '');
 
   extract(shortcode_atts($defaults, $atts));
 
@@ -482,11 +494,11 @@ function rn_widgets_shortcode($atts) {
     return rn_widgets_get_tunewidget($page_object, $posted_by, $shuffle, $autoplay, $blogbuzz);
   case 'grab_box':
     $page_object = rn_widgets_need_page_object(array($artist));
-    return rn_widgets_get_grab_box_widget($page_object, $posted_by, $bgcolor, $fontcolor);
+    return rn_widgets_get_grab_box_widget($page_object, $posted_by, $width, $height, $bgcolor, $fontcolor);
   case 'local_shows':
     // No local shows :(
   case 'local_charts':
-    return rn_widgets_get_local_charts_widget($title, $subtitle, $bgcolor, $fontcolor, $posted_by, $latitude, $longitude, $distance, $genres);
+    return rn_widgets_get_local_charts_widget($title, $subtitle, $bgcolor, $fontcolor, $posted_by, $latitude, $longitude, $distance, $country, $genres);
   case 'blog_player':
     $page_object = rn_widgets_need_page_object(array($artist, $label));
     return rn_widgets_get_blog_player_widget($page_object, $posted_by, $bgcolor, $fontcolor, $shuffle, $autoplay);
@@ -511,7 +523,7 @@ function rn_widgets_shortcode($atts) {
   case 'fan_exclusive':
   case 'fan_exclusives':
     $page_object = rn_widgets_need_page_object(array($artist));
-    return rn_widgets_get_fan_exclusive_widget($page_object, $posted_by, $bgcolor, $fontcolor);
+    return rn_widgets_get_fan_exclusive_widget($page_object, $posted_by, $default_song, $bgcolor, $fontcolor);
   case 'store':
     $page_object = rn_widgets_need_page_object(array($artist));
     return rn_widgets_get_store_widget($page_object, $posted_by, $store_id, $width, $height);
@@ -521,6 +533,7 @@ function rn_widgets_shortcode($atts) {
     $height = rn_widgets_redefault_value($atts, 'height', '200');
     return rn_widgets_get_pro_player_widget($page_object, $posted_by, $bgcolor, $bordercolor, $skin_id, $width, $height, $autoplay, $shuffle);
   case 'pro_video_player':
+  case 'pro_video':
     $page_object = rn_widgets_need_page_object(array($artist));
     $width = rn_widgets_redefault_value($atts, 'width', '262');
     $height = rn_widgets_redefault_value($atts, 'height', '200');
@@ -539,6 +552,7 @@ function rn_widgets_shortcode($atts) {
     $skin_id = rn_widgets_redefault_value($atts, 'skin_id', 'PWPS4003');
     return rn_widgets_get_pro_press_widget($page_object, $posted_by, $bgcolor, $bordercolor, $fontcolor, $skin_id, $width, $height);
   case 'pro_fan_collector':
+  case 'pro_fancollector':
     $page_object = rn_widgets_need_page_object(array($artist));
     $width = rn_widgets_redefault_value($atts, 'width', '262');
     $height = rn_widgets_redefault_value($atts, 'height', '200');
