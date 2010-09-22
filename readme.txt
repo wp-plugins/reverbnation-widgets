@@ -5,7 +5,7 @@ Donate link: http://www.reverbnation.com/
 Tags: music,band,reverbnation,tunepak,widget,flash,player,venues,fans
 Requires at least: 2.5
 Tested up to: 2.9.2
-Stable tag: 1.0
+Stable tag: 1.1
 
 This plugin lets you use music players, video players, tunewidgets,
 email collectors and other ReverbNation widgets on your wordpress
