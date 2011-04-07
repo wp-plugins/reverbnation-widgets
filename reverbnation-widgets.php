@@ -10,6 +10,7 @@
 */
 
 define('REVERBNATION_WIDGET_URL_PREFIX', 'http://cache.reverbnation.com/widgets/swf/');
+define('REVERBNATION_PLUGIN_VERSION', '2.0');
 
 function rn_widgets_shortcode($atts, $url) {
   global $wp_embed;
@@ -20,6 +21,9 @@ function rn_widgets_shortcode($atts, $url) {
   
   //remove any html entities
   $url = html_entity_decode($url);
+  
+  //add the wordpress widget version on to the url. this helps for caching such that we can upgrade the plugin when the oembed changes
+  $url .= '&wp_plugin_version=' . REVERBNATION_PLUGIN_VERSION;
   
   //finally, return whatever the media autoembed returns
   return $wp_embed->autoembed($url);
