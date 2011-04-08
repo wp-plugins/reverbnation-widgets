@@ -47,9 +47,9 @@ widget code. Once generated, you can paste the code wherever you want to use
 
 == Screenshots ==
 
-1. tune-widget.png
-1. player-widget.png
-1. fan-collector-widget.png
+1. A TuneWidget is an entire artist profile wrapped in to one.
+2. The Player widget showcases your music
+3. The FanCollector widget allows you to easily add fans to your FanReach mailing list
 
 == ChangeLog ==
 
